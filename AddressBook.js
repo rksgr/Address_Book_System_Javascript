@@ -176,7 +176,7 @@ console.log("Today we shall work on Address Book System using Node JS.");
     for(let i=0;i<range;i++){
         
         // Match for the contact using first and last name
-        if(addressbook[i].get("first_name") === "Altaf"){
+        if((addressbook[i].get("first_name") === first_name) &&(addressbook[i].get("last_name") === last_name)){
             // edit the contact details
             addressbook[i].set("first_name",contact.get("first_name"));
             addressbook[i].set("last_name",contact.get("last_name"));
@@ -192,12 +192,47 @@ console.log("Today we shall work on Address Book System using Node JS.");
     // Returns an array containing above contacts
     return addressbook;
 }
+//let contact3 = createValidatedContact("Altaf","Hussain","Wellington street","wellington","newzealand",458538,9801234567,"altaf.hussain@gmail.com");
+//let contact4 = createValidatedContact("Ashok","Kumaratunga","Middleton street","Jaipur","rajasthan",458538,9801234567,"ashok.kumaratunga@gmail.com");
+// create an addressbook containing above contacts
+//let addressBook = createAddressBook(contact3,contact4);
+// Edit the contact based on name
+let contact_new = createValidatedContact("Altaf","Hussain","Iqbal street","Kohima","nagaland",458538,9801234567,"altaf.hussain@gmail.com");
+//let first_name = "Altaf";
+//let last_name = "Hussain";
+//console.log(editExistingContact(addressBook,first_name,last_name,contact_new));
+
+
+
+/**
+ * UC 5 : Find a person with name and delete it from array
+ * 
+ * @return: An array (addressbook after modification) containing contacts
+ * 
+ * @param: addressbook, first and last name of contact to be deleted
+ */
+ function deleteExistingContact(addressbook, first_name,last_name){
+    let range = addressbook.length;
+
+    // Loop through the contacts inside the address book
+    for(let i=0;i<range;i++){
+        
+        // Match for the contact using first and last name
+        if((addressbook[i].get("first_name") === first_name) && (addressbook[i].get("last_name") === last_name)){
+            // delete the contact details
+            delete addressbook[i];
+        }
+    }
+
+    // Returns an array after deletion of above contact
+    return addressbook;
+}
 let contact3 = createValidatedContact("Altaf","Hussain","Wellington street","wellington","newzealand",458538,9801234567,"altaf.hussain@gmail.com");
 let contact4 = createValidatedContact("Ashok","Kumaratunga","Middleton street","Jaipur","rajasthan",458538,9801234567,"ashok.kumaratunga@gmail.com");
 // create an addressbook containing above contacts
 let addressBook = createAddressBook(contact3,contact4);
-// Edit the contact based on name
-let contact_new = createValidatedContact("Altaf","Hussain","Iqbal street","Kohima","nagaland",458538,9801234567,"altaf.hussain@gmail.com");
+// Delete the existing contact based on name
 let first_name = "Altaf";
 let last_name = "Hussain";
-console.log(editExistingContact(addressBook,first_name,last_name,contact_new));
+// call the function
+console.log(deleteExistingContact(addressBook,first_name,last_name));
