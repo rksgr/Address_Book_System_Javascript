@@ -147,11 +147,12 @@ console.log("Today we shall work on Address Book System using Node JS.");
  * 
  * @param: arbitrary number of contacts
  */
- function createAddressBook(contact1, contact2){
+ function createAddressBook(contact1,contact2){
     // Create a new addressbook of type array
     const addressBook = new Array();
-
-    addressBook.push(contact1,contact2);
+    for (let i=0;i<arguments.length;i++){
+        addressBook.push(arguments[i]);
+    }
 
     // Returns an array containing above contacts
     return addressBook;
@@ -235,4 +236,33 @@ let addressBook = createAddressBook(contact3,contact4);
 let first_name = "Altaf";
 let last_name = "Hussain";
 // call the function
-console.log(deleteExistingContact(addressBook,first_name,last_name));
+//console.log(deleteExistingContact(addressBook,first_name,last_name));
+
+
+/**
+ * UC 6 : Find the number of contacts inside addressbook 
+ * 
+ * @return: int value (number of contacts inside addressbook)
+ * 
+ * @param: addressbook
+ */
+ function countContact(addressbook){
+
+    // Reduce function cannot work on an empty array, so minimum 1 element will be there
+    let count = 1;
+    let contacts_no = addressbook.reduce((acc,num)=>{
+            count++;
+            return count;
+    })
+    return contacts_no;
+}
+
+let contact11 = createValidatedContact("Altaf","Hussain","Wellington street","wellington","newzealand",458538,9801234567,"altaf.hussain@gmail.com");
+let contact12 = createValidatedContact("Ashok","Kumaratunga","Middleton street","Jaipur","rajasthan",458538,9801234567,"ashok.kumaratunga@gmail.com");
+let contact14 = createValidatedContact("Asim","Singh","Iqbal street","Kohima","nagaland",458538,9801234567,"altaf.hussain@gmail.com");
+
+// create an addressbook containing above contacts
+let addressBook1 = createAddressBook(contact11,contact12,contact14);
+
+// Display the number of contacts inside the addressbook
+console.log("The number of contacts inside address book = "+ countContact(addressBook1));
