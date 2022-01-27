@@ -56,7 +56,9 @@ console.log("Today we shall work on Address Book System using Node JS.");
         if(result){
             // If first name validated, add first name into the map
             contact.set("first_name", first_name);
-        }else throw "Regex validation for first name failed"
+        }
+        // else throw error
+        else throw "Regex validation for first name failed"
         
         // validate last name 
         let regex2 = RegExp("[A-Z][a-zA-Z]{2,}");
@@ -64,7 +66,9 @@ console.log("Today we shall work on Address Book System using Node JS.");
         if(result){
             // If last name validated, add last name into the map
             contact.set("last_name", last_name);
-        }else throw "Regex validation for last name failed"
+        }
+        // else throw error
+        else throw "Regex validation for last name failed"
         
         // validate address
         let regex3 = RegExp("[a-zA-Z]{4,}");
@@ -72,7 +76,9 @@ console.log("Today we shall work on Address Book System using Node JS.");
         if(result){
             // If address validated, add address into the map
             contact.set("address", address);
-        }else throw "Regex validation for address failed.";
+        }
+        // else throw error
+        else throw "Regex validation for address failed.";
         
         // validate city
         let regex4 = RegExp("[a-zA-Z]{4,}");
@@ -90,7 +96,7 @@ console.log("Today we shall work on Address Book System using Node JS.");
             contact.set("state", state);
         }
         // else throw error
-        else throw "Regex validation for state failed.";
+        else throw "Regex validation for state failed." + state;
         
         // validate zip- special characters not allowed at beginning or end, total 6 digits with mid whitespace allowed
         let regex6 = RegExp("^[1-9][0-9]{2}[\\s]?[0-9]{2}[0-9]$");
@@ -121,7 +127,6 @@ console.log("Today we shall work on Address Book System using Node JS.");
             // If email Id validated, add email Id into the map
             contact.set("email_id", email_id);
         }
-    
         // else throw error
         else throw "Regex validation for email Id failed. ";
     }catch(error){
@@ -133,4 +138,25 @@ console.log("Today we shall work on Address Book System using Node JS.");
 }
 
 // call the function to create an address book contact
-console.log(createValidatedContact("Altaf","Hussain","Wellington street","wellington","nnd",458538,9801234567,"altaf.hussain@gmail.com"));
+//console.log(createValidatedContact("Altaf","Hussain","Wellington street","wellington","new zealandnd",458538,9801234567,"altaf.hussain@gmail.com"));
+
+/**
+ * UC 3: Create a new address book array and add new contacts to it 
+ * 
+ * @return: An array (addressbook) containing contacts
+ * 
+ * @param: arbitrary number of contacts
+ */
+ function createAddressBook(contact1, contact2){
+    // Create a new addressbook of type array
+    const addressBook = new Array();
+
+    addressBook.push(contact1,contact2);
+
+    // Returns an array containing above contacts
+    return addressBook;
+}
+let contact1 = createValidatedContact("Altaf","Hussain","Wellington street","wellington","newzealand",458538,9801234567,"altaf.hussain@gmail.com");
+let contact2 = createValidatedContact("Ashok","Kumaratunga","Middleton street","Jaipur","rajasthan",458538,9801234567,"ashok.kumaratunga@gmail.com");
+console.log("This Address book has contacts.");
+console.log(createAddressBook(contact1,contact2));
