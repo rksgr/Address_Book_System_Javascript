@@ -265,4 +265,36 @@ let contact14 = createValidatedContact("Asim","Singh","Iqbal street","Kohima","n
 let addressBook1 = createAddressBook(contact11,contact12,contact14);
 
 // Display the number of contacts inside the addressbook
-console.log("The number of contacts inside address book = "+ countContact(addressBook1));
+//console.log("The number of contacts inside address book = "+ countContact(addressBook1));
+
+
+/**
+ * UC 7 : Ensure no duplicate entry of the same person in the addressbook 
+ * 
+ * @return: boolean value (true if person name already exists in address book, false otherwise)
+ * 
+ * @param: addressbook, contact
+ */
+ function preventDuplicateEntry(addressbook,contact){
+
+    // Each contact in address book mapped to first_name concatenated with last_name, some() checks if any concatenated 
+    //name matches the first_name and last name combined of contact to be added
+    let contactAlreadyPresent = addressbook.map(contacts=>{ return contacts.get("first_name")+contacts.get("last_name")})
+                                            .some(contact_names=>{
+                                                return contact_names == (contact.get("first_name")+contact.get("last_name"));});   
+    
+    return contactAlreadyPresent;
+}
+
+let contact21 = createValidatedContact("Altaf","Hussain","Wellington street","wellington","newzealand",458538,9801234567,"altaf.hussain@gmail.com");
+let contact22 = createValidatedContact("Ashok","Kumaratunga","Middleton street","Jaipur","rajasthan",458538,9801234567,"ashok.kumaratunga@gmail.com");
+let contact23 = createValidatedContact("Asim","Singh","Iqbal street","Kohima","nagaland",458538,9801234567,"altaf.hussain@gmail.com");
+// create an addressbook containing above contacts
+let addressBook2 = createAddressBook(contact21,contact22,contact23);
+
+let contact25 = createValidatedContact("Asim","Singh","Iqbal street","Kohima","nagaland",458538,9801234567,"altaf.hussain@gmail.com");
+
+let contactAlreadyPresent = preventDuplicateEntry(addressBook2,contact25);
+
+// Display if the contact is already present inside the addressbook
+console.log("Is the contact already present inside address book: "+ contactAlreadyPresent);
