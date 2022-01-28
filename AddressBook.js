@@ -358,12 +358,20 @@ if(contactDetails.length == 0){
 
     // view persons by city
     if(IsCity){
-        let contactDetails = addressbook.filter(contacts=> (contacts.get("city") == cityOrState));                                        
+        let contactDetails = addressbook.filter(contacts=> (contacts.get("city") == cityOrState));  
+
+        if(contactDetails.length == 0){
+            return console.log("No person has not been found in the city 0f "+ cityOrState);
+        }                                    
         return contactDetails;
     }
     // view persons by state
     else if(!IsCity){
-        let contactDetails = addressbook.filter(contacts=> (contacts.get("state") == cityOrState));                                                        
+        let contactDetails = addressbook.filter(contacts=> (contacts.get("state") == cityOrState));  
+
+        if(contactDetails.length == 0){
+            return console.log("No person has not been found in the state 0f "+ cityOrState);
+        }                                                       
         return contactDetails;
     }
 
@@ -379,12 +387,52 @@ let contact45 = createValidatedContact("Aman","Singh","Konark street","kochi","k
 let addressBook4 = createAddressBook(contact41,contact43,contact44,contact45);
 
 // Get an arraylist containing all the contacts of a given city or state
-let contactDetls = viewAllPersonsInCityOrState(addressBook4,false,"kerala");
+let contactDetls = viewAllPersonsInCityOrState(addressBook4,false,"karnataka");
 
 // Display the contact details if any in a particular city or state
-if(contactDetls.length == 0){
-    console.log("No person has not been found in given city or state.")
-}else{
-    console.log("The contact details of the person are: ");
-    console.log(contactDetls);
+if(contactDetls != null){
+    //console.log("The contact details of the person are: ");
+    //console.log(contactDetls);
 }
+
+
+/**
+ * UC 10 : Count number of persons in a particular city or state
+ * 
+ * @return: number (count of persons in a city or state)
+ * 
+ * @param: addressbook, IsCity(true indicates city, false indicates state), cityOrState
+ */
+ function countPersonsInCityOrState(addressbook,IsCity,cityOrState){
+
+    // All contacts in address book are filtered for the given city or state
+    let contactNums = 0;
+    var byCityOrState = "";
+
+    if(IsCity){byCityOrState = "city" }
+    else if(!IsCity){byCityOrState = "state"}
+
+    try{
+        // Count persons by filtering contacts of that city, then each contact replaced with number 1 and count all the elements of the array
+        contactNums = addressbook.filter(contacts=> (contacts.get(byCityOrState) == cityOrState))  
+                                    .map(contact=>1)
+                                    .reduce((totl,num)=>(totl+num));  
+    }
+    // If array is empty reduce throws TypeError
+    catch(TypeError){contactNums  = 0;}
+    return contactNums;
+}
+
+let contact52 = createValidatedContact("Altaf","Hussain","Wellington street","mysore","karnataka",458538,9801234567,"altaf.hussain@gmail.com");
+let contact53 = createValidatedContact("Ashok","Kumaratunga","Middleton street","kollam","kerala",458538,9801234567,"ashok.kumaratunga@gmail.com");
+let contact54 = createValidatedContact("Asim","Singh","Iqbal street","mysore","karnataka",458538,9801234567,"asim.singh@gmail.com");
+let contact55 = createValidatedContact("Aman","Singh","Konark street","kochi","kerala",490538,9805432167,"aman.singh@gmail.com");
+
+// create an addressbook containing above contacts
+let addressBook5 = createAddressBook(contact52,contact53,contact54,contact55);
+
+// Get the count of all the contacts in a given city or state
+let cityOrState = "karnataka";
+let contactNums = countPersonsInCityOrState(addressBook5,false,cityOrState);
+console.log("Number of contacts in the city or state of "+ cityOrState);
+console.log(contactNums);
