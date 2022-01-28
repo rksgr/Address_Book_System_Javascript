@@ -297,4 +297,49 @@ let contact25 = createValidatedContact("Asim","Singh","Iqbal street","Kohima","n
 let contactAlreadyPresent = preventDuplicateEntry(addressBook2,contact25);
 
 // Display if the contact is already present inside the addressbook
-console.log("Is the contact already present inside address book: "+ contactAlreadyPresent);
+//console.log("Is the contact already present inside address book: "+ contactAlreadyPresent);
+
+
+/**
+ * UC 8 : Search a person in a particular city or state
+ * 
+ * @return: contact of the person being searched or null
+ * 
+ * @param: addressbook, first_name, last_name, IsCity(true indicates city, false indicates state), cityOrState
+ */
+ function searchPersonInCity(addressbook,IsCity,cityOrState,first_name,last_name){
+
+    // All contacts in address book are filtered for the given city or state, then the  
+    //name is matched with the first name and last name of contact to be searched
+    let contactDetails = "contact not present in given city or state";
+    if(IsCity){
+        let contactDetails = addressbook.filter(contacts=> (contacts.get("city") == cityOrState))       
+                                        .filter(contacts=>(contacts.get("first_name") == first_name  && contacts.get("last_name") == last_name));
+                                        
+        return contactDetails;
+    }else if(!IsCity){
+        let contactDetails = addressbook.filter(contacts=> (contacts.get("state") == cityOrState))
+                                        .filter(contacts=>(contacts.get("first_name") == first_name  && contacts.get("last_name") == last_name));                                   
+        return contactDetails;
+        }
+    return contactDetails;
+}
+
+let contact31 = createValidatedContact("Altaf","Hussain","Wellington street","mysore","newzealand",458538,9801234567,"altaf.hussain@gmail.com");
+let contact32 = createValidatedContact("Ashok","Kumaratunga","Middleton street","Jaipur","rajasthan",458538,9801234567,"ashok.kumaratunga@gmail.com");
+let contact34 = createValidatedContact("Asim","Singh","Iqbal street","mysore","karnataka",458538,9801234567,"asim.singh@gmail.com");
+let contact35 = createValidatedContact("Aman","Singh","Konark street","mysore","karnataka",490538,9805432167,"aman.singh@gmail.com");
+
+// create an addressbook containing above contacts
+let addressBook3 = createAddressBook(contact31,contact32,contact34,contact35);
+
+let contactDetails = searchPersonInCity(addressBook3,false,"karnataka","Asim","Singh");
+
+// Display the contact details if present in a particular city or state
+if(contactDetails.length == 0){
+    console.log("The person has not been found in given city or state.")
+}else{
+    console.log("The contact details of the person are: ");
+    console.log(contactDetails);
+}
+
